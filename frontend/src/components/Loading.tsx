@@ -1,25 +1,36 @@
-import { Loader2, Search, MapPin, Calendar } from 'lucide-react';
+/**
+ * Loading Component
+ * 
+ * Displays a loading spinner with customizable message and size.
+ * 
+ * Features:
+ * - Multiple loading types (default, search, location, events)
+ * - Configurable size (sm, md, lg)
+ * - Custom messages
+ * - Animated spinner
+ * 
+ * @component
+ */
 
+/**
+ * Props for the Loading component
+ */
 interface LoadingProps {
+    /** Custom loading message */
     message?: string;
+    /** Type of loading indicator */
     type?: 'default' | 'search' | 'location' | 'events';
+    /** Size of the loading indicator */
     size?: 'sm' | 'md' | 'lg';
 }
 
+/**
+ * Loading indicator component with customizable appearance
+ */
 const Loading = ({ message, type = 'default', size = 'md' }: LoadingProps) => {
-    const getIcon = () => {
-        switch (type) {
-            case 'search':
-                return <Search className="animate-pulse" size={size === 'sm' ? 16 : size === 'lg' ? 32 : 24} />;
-            case 'location':
-                return <MapPin className="animate-pulse" size={size === 'sm' ? 16 : size === 'lg' ? 32 : 24} />;
-            case 'events':
-                return <Calendar className="animate-pulse" size={size === 'sm' ? 16 : size === 'lg' ? 32 : 24} />;
-            default:
-                return <Loader2 className="animate-spin" size={size === 'sm' ? 16 : size === 'lg' ? 32 : 24} />;
-        }
-    };
-
+    /**
+     * Get the appropriate message based on type or custom message
+     */
     const getMessage = () => {
         if (message) return message;
 
@@ -40,8 +51,6 @@ const Loading = ({ message, type = 'default', size = 'md' }: LoadingProps) => {
         md: 'p-8',
         lg: 'p-12'
     };
-
-    const iconSize = size === 'sm' ? 16 : size === 'lg' ? 24 : 20;
 
     return (
         <div className={`loading ${sizeClasses[size]}`}>

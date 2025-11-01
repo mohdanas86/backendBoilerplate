@@ -1,3 +1,18 @@
+/**
+ * CreateEvent Page
+ * 
+ * Form for creating new events with validation.
+ * 
+ * Features:
+ * - Multi-field form with real-time validation
+ * - Character counters for text inputs
+ * - Live preview of event details
+ * - Success screen with auto-redirect
+ * - Helpful tips for event creation
+ * 
+ * @component
+ */
+
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Save, Calendar, MapPin, Users, FileText } from 'lucide-react';
@@ -6,6 +21,9 @@ import { validateEventForm, getCurrentDateForInput } from '../utils/helpers';
 import ErrorMessage from '../components/ErrorMessage';
 import type { CreateEventData } from '../types/event';
 
+/**
+ * Form validation errors interface
+ */
 interface FormErrors {
     title?: string;
     description?: string;
@@ -15,6 +33,9 @@ interface FormErrors {
     currentParticipants?: string;
 }
 
+/**
+ * CreateEvent page component for creating new events
+ */
 const CreateEvent = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);

@@ -1,5 +1,22 @@
+/**
+ * Global Error Handler Middleware
+ * 
+ * Catches and processes all errors in the application.
+ * Converts non-ApiError errors to ApiError format for consistency.
+ * 
+ * @module middlewares/errorHandler
+ */
+
 import { ApiError } from '../utils/apiError.js';
 
+/**
+ * Express error handling middleware
+ * 
+ * @param {Error} err - The error object
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ * @param {import('express').NextFunction} next - Express next middleware function
+ */
 const errorHandler = (err, req, res, next) => {
     let error = err;
 

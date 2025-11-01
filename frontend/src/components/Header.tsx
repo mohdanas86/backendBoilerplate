@@ -1,15 +1,29 @@
-'use client'
+/**
+ * Header Component
+ * 
+ * Main navigation header with responsive mobile menu.
+ * Features:
+ * - Logo and branding
+ * - Desktop navigation links
+ * - Mobile hamburger menu with slide-out panel
+ * - Active route highlighting
+ * 
+ * @component
+ */
 
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Dialog, DialogPanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon, CalendarDaysIcon } from '@heroicons/react/24/outline'
+import { Menu, X, Calendar } from 'lucide-react'
 
 const navigation = [
     { name: 'Events', href: '/' },
     { name: 'Create Event', href: '/create' },
 ]
 
+/**
+ * Navigation header component with mobile responsiveness
+ */
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const location = useLocation()
@@ -26,7 +40,7 @@ export default function Header() {
                     <div className="flex items-center">
                         <Link to="/" className="flex items-center gap-3 group">
                             <div className="flex items-center justify-center w-9 h-9 bg-blue-600 rounded">
-                                <CalendarDaysIcon className="w-5 h-5 text-white" />
+                                <Calendar className="w-5 h-5 text-white" />
                             </div>
                             <span className="text-lg font-semibold text-gray-900">
                                 EventFinder
@@ -68,7 +82,7 @@ export default function Header() {
                             className="inline-flex items-center justify-center p-2 text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors"
                         >
                             <span className="sr-only">Open main menu</span>
-                            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
+                            <Menu aria-hidden="true" className="h-6 w-6" />
                         </button>
                     </div>
                 </div>
@@ -81,7 +95,7 @@ export default function Header() {
                     <div className="flex items-center justify-between">
                         <Link to="/" className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
                             <div className="flex items-center justify-center w-9 h-9 bg-blue-600 rounded">
-                                <CalendarDaysIcon className="w-5 h-5 text-white" />
+                                <Calendar className="w-5 h-5 text-white" />
                             </div>
                             <span className="text-lg font-semibold text-gray-900">
                                 EventFinder
@@ -93,7 +107,7 @@ export default function Header() {
                             className="p-2 text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors"
                         >
                             <span className="sr-only">Close menu</span>
-                            <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+                            <X aria-hidden="true" className="h-6 w-6" />
                         </button>
                     </div>
                     <div className="mt-6">

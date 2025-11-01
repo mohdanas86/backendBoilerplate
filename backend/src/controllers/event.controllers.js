@@ -1,9 +1,27 @@
+/**
+ * Event Controllers
+ * 
+ * Handles all event-related business logic and database operations.
+ * 
+ * @module controllers/event
+ */
+
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiResponse } from '../utils/apiResponse.js';
 import { ApiError } from '../utils/apiError.js';
 import { Event } from '../models/event.model.js';
 
-// Create an event
+/**
+ * Create a new event
+ * 
+ * @route   POST /api/events
+ * @access  Public
+ * 
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ * @throws {ApiError} 400 - If required fields are missing or invalid
+ * @returns {ApiResponse} 201 - Created event data
+ */
 const createEvent = asyncHandler(async (req, res) => {
     const { title, description, location, date, maxParticipants, currentParticipants } = req.body;
 
@@ -41,7 +59,17 @@ const createEvent = asyncHandler(async (req, res) => {
     return res.status(201).json(new ApiResponse(201, event, 'Event created successfully'));
 });
 
-// Get all events with optional location filter
+/**
+ * Get all events with optional location filter
+ * 
+ * @route   GET /api/events
+ * @access  Public
+ * 
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ * @query   {string} [location] - Optional location filter (case-insensitive)
+ * @returns {ApiResponse} 200 - Array of events
+ */
 const getAllEvents = asyncHandler(async (req, res) => {
     const { location } = req.query;
 
@@ -57,7 +85,19 @@ const getAllEvents = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, events, 'Events retrieved successfully'));
 });
 
-// Get event details by ID
+/**
+ * Get event details by ID
+ * 
+ * @route   GET /api/events/:id
+ * @access  Public
+ * 
+ * @param {import('express').Request} req - Express request object
+ * @param {import('express').Response} res - Express response object
+ * @param {string} req.params.id - MongoDB ObjectId of the event
+ * @throws {ApiError} 400 - If event ID format is invalid
+ * @throws {ApiError} 404 - If event not found
+ * @returns {ApiResponse} 200 - Event details
+ */
 const getEventById = asyncHandler(async (req, res) => {
     const { id } = req.params;
 

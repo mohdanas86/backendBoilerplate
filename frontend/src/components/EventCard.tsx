@@ -1,14 +1,37 @@
+/**
+ * EventCard Component
+ * 
+ * Displays a single event in a card format.
+ * 
+ * Features:
+ * - Status badges (Open, Full, Past)
+ * - Event details with icons
+ * - Optional distance display
+ * - Responsive hover effects
+ * - Truncated text with line clamping
+ * 
+ * @component
+ */
+
 import { Link } from 'react-router-dom';
 import { Calendar, MapPin, Users, Clock, Navigation } from 'lucide-react';
 import type { Event } from '../types/event';
 import { formatDate, truncateText, isEventInPast } from '../utils/helpers';
 import { formatDistance } from '../utils/locationUtils';
 
+/**
+ * Props for the EventCard component
+ */
 interface EventCardProps {
+    /** Event data to display */
     event: Event;
+    /** Whether to show distance from user (requires distance field) */
     showDistance?: boolean;
 }
 
+/**
+ * EventCard component for displaying event information
+ */
 const EventCard = ({ event, showDistance = false }: EventCardProps) => {
     const isPast = isEventInPast(event.date);
     const isFull = event.currentParticipants >= event.maxParticipants;

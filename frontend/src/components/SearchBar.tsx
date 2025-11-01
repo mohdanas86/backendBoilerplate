@@ -1,3 +1,18 @@
+/**
+ * SearchBar Component
+ * 
+ * Advanced search and filter interface for events.
+ * 
+ * Features:
+ * - Text-based location search with debouncing
+ * - Geolocation support with browser/HTTPS checks
+ * - Advanced filters: date range, distance, sorting
+ * - Error handling with helpful suggestions
+ * - Responsive design for mobile and desktop
+ * 
+ * @component
+ */
+
 import { useState, useEffect } from 'react';
 import {
     Search,
@@ -11,16 +26,29 @@ import {
 } from 'lucide-react';
 import type { SearchFilters, UserLocation } from '../types/event';
 
+/**
+ * Props for the SearchBar component
+ */
 interface SearchBarProps {
+    /** Current filter values */
     filters: SearchFilters;
+    /** Callback when filters change */
     onFiltersChange: (filters: SearchFilters) => void;
+    /** Callback to request user's geolocation */
     onLocationRequest: () => void;
+    /** User's detected location (if available) */
     userLocation?: UserLocation | null;
+    /** Whether location is currently being fetched */
     locationLoading: boolean;
+    /** Location error message (if any) */
     locationError?: string;
+    /** Helpful suggestion for fixing location errors */
     locationSuggestion?: string;
 }
 
+/**
+ * SearchBar component for filtering and searching events
+ */
 const SearchBar = ({
     filters,
     onFiltersChange,

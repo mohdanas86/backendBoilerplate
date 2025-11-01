@@ -1,10 +1,32 @@
+/**
+ * ErrorMessage Component
+ * 
+ * Displays error messages with optional retry action.
+ * 
+ * Features:
+ * - Clear error presentation
+ * - Optional retry button
+ * - Icon for visual emphasis
+ * - Accessible design
+ * 
+ * @component
+ */
+
 import { AlertCircle, RefreshCw } from 'lucide-react';
 
+/**
+ * Props for the ErrorMessage component
+ */
 interface ErrorMessageProps {
+    /** Error message to display */
     message: string;
+    /** Optional callback for retry action */
     onRetry?: () => void;
 }
 
+/**
+ * ErrorMessage component for displaying error states
+ */
 const ErrorMessage = ({ message, onRetry }: ErrorMessageProps) => {
     return (
         <div className="bg-red-50 border border-red-200 p-5">

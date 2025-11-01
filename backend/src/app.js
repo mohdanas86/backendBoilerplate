@@ -16,11 +16,22 @@ app.use(express.static('public'));
 app.use(cookieParser());
 
 // import routes here
-import userRouter from './routes/user.routes.js';
 import eventRouter from './routes/event.routes.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    message: 'Backend server is running',
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Use routes
-app.use('/api/v1/user', userRouter);
 app.use('/api/events', eventRouter);
+
+// Global error handler (must be last)
+app.use(errorHandler);
 
 export { app };

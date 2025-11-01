@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Plus, Calendar, AlertCircle } from 'lucide-react';
+import { Plus, Calendar, MapPin, Navigation } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import EventCard from '../components/EventCard';
 import SearchBar from '../components/SearchBar';
@@ -17,7 +17,6 @@ import type { Event, SearchFilters, UserLocation } from '../types/event';
 const EventList = () => {
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(true);
-    const [searchLoading, setSearchLoading] = useState(false);
     const [locationLoading, setLocationLoading] = useState(false);
     const [error, setError] = useState<string>('');
     const [locationError, setLocationError] = useState<string>('');
@@ -97,36 +96,36 @@ const EventList = () => {
     }, [fetchEvents]);
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-gray-50">
             {/* Hero Section */}
-            <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+            <div className="bg-blue-600 text-white">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 md:py-16">
                     <div className="text-center">
-                        <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                        <h1 className="text-3xl md:text-5xl font-bold mb-4">
                             Discover Amazing Events
                         </h1>
-                        <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                        <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
                             Find and join exciting events in your area. From conferences to workshops, discover what's happening around you.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                             <Link
                                 to="/create"
-                                className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+                                className="inline-flex items-center bg-white text-blue-600 px-6 py-3 font-medium hover:bg-blue-50 transition-colors"
                             >
-                                <Plus className="inline w-5 h-5 mr-2" />
-                                Create Your Event
+                                <Plus className="w-5 h-5 mr-2" />
+                                Create Event
                             </Link>
-                            <div className="text-blue-200">
+                            <span className="text-blue-100 text-sm">
                                 Join 10,000+ event enthusiasts
-                            </div>
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Search Section */}
-            <div className="max-w-7xl mx-auto px-6 lg:px-8 -mt-8 relative z-10">
-                <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 -mt-6 relative z-10">
+                <div className="bg-white border border-gray-200 p-6">
                     <SearchBar
                         filters={filters}
                         onFiltersChange={setFilters}
@@ -140,9 +139,9 @@ const EventList = () => {
             </div>
 
             {/* Content */}
-            <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
                 {/* Loading State */}
-                {loading && <Loading type="events" message="Discovering amazing events..." />}
+                {loading && <Loading type="events" message="Loading events..." />}
 
                 {/* Error State */}
                 {error && (
@@ -156,57 +155,55 @@ const EventList = () => {
                 {!loading && !error && (
                     <>
                         {filteredEvents.length === 0 ? (
-                            <div className="text-center py-20">
-                                <div className="w-24 h-24 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                                    <Calendar className="w-12 h-12 text-blue-600" />
+                            <div className="text-center py-16 bg-white border border-gray-200 p-8">
+                                <div className="w-16 h-16 bg-gray-100 flex items-center justify-center mx-auto mb-4">
+                                    <Calendar className="w-8 h-8 text-gray-400" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                                <h3 className="text-xl font-semibold text-gray-900 mb-2">
                                     No events found
                                 </h3>
-                                <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                                <p className="text-gray-600 mb-6 max-w-md mx-auto text-sm">
                                     {filters.location
-                                        ? `No events found matching your search criteria. Try adjusting your filters or create the first event in this area!`
-                                        : 'No events available at the moment. Be the first to create one and start building your community!'
+                                        ? `No events found matching your search criteria. Try adjusting your filters.`
+                                        : 'No events available at the moment. Be the first to create one!'
                                     }
                                 </p>
                                 {!filters.location && (
                                     <Link
                                         to="/create"
-                                        className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200"
+                                        className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 font-medium transition-colors"
                                     >
                                         <Plus className="w-5 h-5 mr-2" />
-                                        Create the First Event
+                                        Create Event
                                     </Link>
                                 )}
                             </div>
                         ) : (
                             <>
                                 {/* Results Summary */}
-                                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6 mb-8">
-                                    <div className="flex flex-wrap items-center gap-4 text-sm">
-                                        <div className="flex items-center bg-white px-4 py-2 rounded-lg shadow-sm">
-                                            <span className="font-semibold text-gray-900">
-                                                {filteredEvents.length} event{filteredEvents.length !== 1 ? 's' : ''} found
+                                <div className="bg-blue-50 border border-blue-200 p-4 mb-6">
+                                    <div className="flex flex-wrap items-center gap-2 text-xs">
+                                        <div className="inline-flex items-center bg-white border border-gray-200 px-3 py-1.5">
+                                            <span className="font-medium text-gray-900">
+                                                {filteredEvents.length} event{filteredEvents.length !== 1 ? 's' : ''}
                                             </span>
                                         </div>
                                         {filters.location && (
-                                            <div className="flex items-center bg-white px-4 py-2 rounded-lg shadow-sm">
-                                                <span className="text-gray-700">📍 {filters.location}</span>
+                                            <div className="inline-flex items-center gap-1.5 bg-white border border-gray-200 px-3 py-1.5">
+                                                <MapPin size={14} className="text-gray-500" />
+                                                <span className="text-gray-700">{filters.location}</span>
                                             </div>
                                         )}
                                         {filters.dateRange !== 'all' && (
-                                            <div className="flex items-center bg-white px-4 py-2 rounded-lg shadow-sm">
-                                                <span className="text-gray-700">📅 {filters.dateRange.replace('-', ' ')}</span>
+                                            <div className="inline-flex items-center gap-1.5 bg-white border border-gray-200 px-3 py-1.5">
+                                                <Calendar size={14} className="text-gray-500" />
+                                                <span className="text-gray-700">{filters.dateRange.replace('-', ' ')}</span>
                                             </div>
                                         )}
                                         {userLocation && filters.maxDistance && (
-                                            <div className="flex items-center bg-white px-4 py-2 rounded-lg shadow-sm">
-                                                <span className="text-gray-700">📏 Within {filters.maxDistance}km</span>
-                                            </div>
-                                        )}
-                                        {userLocation && (
-                                            <div className="flex items-center bg-white px-4 py-2 rounded-lg shadow-sm">
-                                                <span className="text-gray-700">🔄 Sorted by {filters.sortBy}</span>
+                                            <div className="inline-flex items-center gap-1.5 bg-white border border-gray-200 px-3 py-1.5">
+                                                <Navigation size={14} className="text-gray-500" />
+                                                <span className="text-gray-700">Within {filters.maxDistance}km</span>
                                             </div>
                                         )}
                                     </div>
@@ -214,17 +211,17 @@ const EventList = () => {
 
                                 {/* Upcoming Events */}
                                 {upcomingEvents.length > 0 && (
-                                    <section className="mb-16">
-                                        <div className="flex items-center justify-between mb-8">
-                                            <h2 className="text-3xl font-bold text-gray-900">
+                                    <section className="mb-12">
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <h2 className="text-2xl font-semibold text-gray-900">
                                                 Upcoming Events
-                                                <span className="ml-3 text-lg font-normal text-gray-500">
-                                                    ({upcomingEvents.length})
-                                                </span>
                                             </h2>
-                                            <div className="h-1 flex-1 ml-8 bg-gradient-to-r from-blue-200 to-transparent rounded"></div>
+                                            <span className="text-sm text-gray-500">
+                                                ({upcomingEvents.length})
+                                            </span>
+                                            <div className="h-px flex-1 bg-gray-200"></div>
                                         </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                             {upcomingEvents.map((event) => (
                                                 <EventCard
                                                     key={event._id}
@@ -239,16 +236,16 @@ const EventList = () => {
                                 {/* Past Events */}
                                 {pastEvents.length > 0 && (
                                     <section>
-                                        <div className="flex items-center justify-between mb-8">
-                                            <h2 className="text-3xl font-bold text-gray-900">
+                                        <div className="flex items-center gap-4 mb-6">
+                                            <h2 className="text-2xl font-semibold text-gray-900">
                                                 Past Events
-                                                <span className="ml-3 text-lg font-normal text-gray-500">
-                                                    ({pastEvents.length})
-                                                </span>
                                             </h2>
-                                            <div className="h-1 flex-1 ml-8 bg-gradient-to-r from-gray-200 to-transparent rounded"></div>
+                                            <span className="text-sm text-gray-500">
+                                                ({pastEvents.length})
+                                            </span>
+                                            <div className="h-px flex-1 bg-gray-200"></div>
                                         </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                             {pastEvents.map((event) => (
                                                 <EventCard
                                                     key={event._id}

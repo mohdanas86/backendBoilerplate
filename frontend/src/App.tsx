@@ -8,9 +8,9 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="min-h-screen bg-gray-50">
         <Header />
-        <main className="pt-20">
+        <main>
           <Routes>
             <Route path="/" element={<EventList />} />
             <Route path="/events/:id" element={<EventDetail />} />
